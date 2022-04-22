@@ -3,16 +3,16 @@ import {Schema,model} from 'mongoose';
 const favsSchema = new Schema({
     title: {
         type:String,
-        require: true,
+        required: true,
     },
     description: {
         type:String,
-        require: false,
+        required: false,
         default: "",
     },
     link: {
         type:String,
-        require: false,
+        required: false,
     },
 })
 

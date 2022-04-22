@@ -4,17 +4,17 @@ import bcrypt from 'bcryptjs'
 const userSchema = new Schema({
     email: {
         type:String,
-        require: true,
+        required: true,
     },
     password: {
         type:String,
-        require: true,
+        required: true,
         default:"",
     },
     ownList: [{
         type: Schema.Types.ObjectId ,
         ref: 'ListFavs',
-        require : false,
+        required : false,
     }]
 })
 

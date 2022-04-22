@@ -4,7 +4,7 @@ import userModel from '../models/user.model';
  
  export const isAuthenticated = async (req,res,next) => {
     try{
-        const bearerHeader = req.headers['authorization']
+        const bearerHeader = req.headers['Authorization']
 
         if(!bearerHeader){
             return res.status(403).json({message:"No token provided"})

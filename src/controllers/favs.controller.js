@@ -1,5 +1,6 @@
 import ListFavs from '../models/listFavs.model';
 import Fav from '../models/favs.model';
+require('regenerator-runtime/runtime');
 
 
 export const createFav = async (req,res) => {
