@@ -5,7 +5,7 @@ export const connect = (url = config.db, opts = {}) => {
   return mongoose.connect(url, { ...opts, useNewUrlParser: true });
 };
 
-export const disconnect = async () => {
+export const disconnect = () => {
   
-  await mongoose.disconnect();
+  return mongoose.disconnect();
 } 

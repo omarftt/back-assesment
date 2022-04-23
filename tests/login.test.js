@@ -1,6 +1,5 @@
 import app from '../src/app'
 import request from 'supertest';
-import { User } from '../src/models/user.model';
 import { connect, disconnect } from "../src/database";
 
 
@@ -22,34 +21,70 @@ describe('AUTH controller',  () => {
         it("should create a new user", async () => {
             
             const response = await request(app).post('/api/auth/signup').send(userTest)
-            console.log(response.body)
             expect(typeof response.body).toBe('string');
         })
     })
 })
 
 describe('LISTFAVS controller',  () => {
-    beforeAll(async () => {
-        await connect();
-
-        
+    beforeAll( (done) => {
+         connect();
+         done()
     })
 
-    afterAll(async () => {
-        await disconnect();
+    afterAll( (done) => {
+        disconnect();
+        done()
     })
 
     describe('POST /api/favs/', () => {
        
+        it("Should show unauthorization message", () => {
+            
+            const response =  request(app)
+                                            .post('/api/favs/')
+                                            .set('Accept', 'application/json')
+                                            .send({name:"List de favs 10001"})
+                                            .expect(403)
+                                            .end()
 
-        it("should create a new list", async () => {
+        })
+
+        it("should create a new list", () => {
             const userTest = { 
                 email: "Kz2@mz.com" ,
                 password: "122345",
             }
-            const token = await request(app).post('/api/auth/signup').send(userTest)
-            const response = await request(app).post('/api/favs/').send({name:"List de favs 10001"}).set("Authorization",token.body)
-            expect(typeof response).toBe('string');
+            const token = request(app).post('/api/auth/signup').send(userTest).end()
+            const response =  request(app)
+                                            .post('/api/favs/')
+                                            .set('Accept', 'application/json')
+                                            .send({name:"List de favs 10001"})
+                                            .auth(token.body, {type:'bearer'})
+                                            .expect('Content-Type', /json/)
+                                            .expect(201)
+                                            .end()
+
+        })
+    })
+
+    describe('GET /api/favs/', () => {
+
+        it("should get the user lists", () => {
+            const userTest = { 
+                email: "Kz3@mz.com" ,
+                password: "12234567",
+            }
+            const token = request(app).post('/api/auth/signup').send(userTest).end()
+            const response =  request(app)
+                                            .post('/api/favs/')
+                                            .set('Accept', 'application/json')
+                                            .send({name:"List de favs 10001"})
+                                            .auth(token.body, {type:'bearer'})
+                                            .expect('Content-Type', /json/)
+                                            .expect(201)
+                                            .end()
+
         })
     })
 })
