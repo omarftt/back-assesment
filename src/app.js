@@ -12,7 +12,7 @@ app.use(express.json())
 
 app.use('/api/fav',favsRoutes)
 app.use('/api/favs',listFavsRoutes)
-app.use('/api/auth',authRoutes)
+app.use('/auth/local',authRoutes)
 
 app.get('/', (req, res) => {
     res.json('Favs API')

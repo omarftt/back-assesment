@@ -12,15 +12,16 @@ describe('AUTH controller',  () => {
         await disconnect();
     })
 
-    describe('POST /api/auth/signup', () => {
+    describe('POST /auth/local/register', () => {
+        const randomNumber = Math.floor(Math.random() * 100);
         const userTest = { 
-            email: "Kz@mz.com" ,
-            password: "12345",
+            email: `Kz9${randomNumber}@mz.com` ,
+            password: `12234564${randomNumber}`,
         }
 
         it("should create a new user", async () => {
             
-            const response = await request(app).post('/api/auth/signup').send(userTest)
+            const response = await request(app).post('/auth/local/register').send(userTest)
             expect(typeof response.body).toBe('string');
         })
     })
@@ -51,11 +52,12 @@ describe('LISTFAVS controller',  () => {
         })
 
         it("should create a new list", () => {
+            const randomNumber = Math.floor(Math.random() * 100);
             const userTest = { 
-                email: "Kz2@mz.com" ,
-                password: "122345",
+                email: `Kz4${randomNumber}@mz.com` ,
+                password: `12134567${randomNumber}`,
             }
-            const token = request(app).post('/api/auth/signup').send(userTest).end()
+            const token = request(app).post('/auth/local/register').send(userTest).end()
             const response =  request(app)
                                             .post('/api/favs/')
                                             .set('Accept', 'application/json')
@@ -71,11 +73,12 @@ describe('LISTFAVS controller',  () => {
     describe('GET /api/favs/', () => {
 
         it("should get the user lists", () => {
+            const randomNumber = Math.floor(Math.random() * 100);
             const userTest = { 
-                email: "Kz3@mz.com" ,
-                password: "12234567",
+                email: `Kz3${randomNumber}@mz.com` ,
+                password: `12234567${randomNumber}`,
             }
-            const token = request(app).post('/api/auth/signup').send(userTest).end()
+            const token = request(app).post('/auth/local/register').send(userTest).end()
             const response =  request(app)
                                             .post('/api/favs/')
                                             .set('Accept', 'application/json')

@@ -30,7 +30,6 @@ export const getListFavs = async (req,res) => {
         const emailToSearch = user.email
         const currentUser = await User.findOne({email:emailToSearch})
         const listFavs = await ListFavs.find({_id: {$in: currentUser.ownList}}).populate('favs')
-        console.log(listFavs)
 
         res.json({message:listFavs})
     }  catch(error){
